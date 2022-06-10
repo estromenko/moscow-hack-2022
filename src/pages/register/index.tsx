@@ -20,4 +20,6 @@ const Register: FC = () => {
   );
 };
 
+Register.displayName = 'Register';
+
 export default Register;

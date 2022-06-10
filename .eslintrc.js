@@ -92,8 +92,9 @@ module.exports = {
     'eqeqeq': ['error', 'always'],
     'prettier/prettier': ['error', {}, { usePrettierrc: true, endOfLine: 'off' }],
     'import/extensions': 'off',
-    'no-unused-vars': 'warn',
+    'no-unused-vars': 'off',
     'no-param-reassign': 'off',
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
   },
   settings: {
     'import/resolver': {

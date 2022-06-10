@@ -22,4 +22,6 @@ const Login: FC = () => {
   );
 };
 
+Login.displayName = 'Login';
+
 export default Login;

@@ -6,10 +6,7 @@ import Header from '../../widgets/Header';
 import Container from '../../shared/ui/container';
 
 const PrivateRouter = () => {
-  const { accessToken, isLoading, email } = useAppSelector((state) => state.auth);
-  console.log('==========>email', email);
-  console.log('==========>isLoading', isLoading);
-  console.log('==========>1111', 1111);
+  const { accessToken } = useAppSelector((state) => state.auth);
 
   return accessToken ? (
     <>
@@ -24,5 +21,7 @@ const PrivateRouter = () => {
     <Navigate to="/login" />
   );
 };
+
+PrivateRouter.displayName = 'PrivateRouter';
 
 export default PrivateRouter;
