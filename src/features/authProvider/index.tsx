@@ -22,4 +22,6 @@ const AuthProvider: FC = ({ children }) => {
   return isLoading ? <>loading</> : <>{children}</>;
 };
 
+AuthProvider.displayName = 'AuthProvider';
+
 export default AuthProvider;

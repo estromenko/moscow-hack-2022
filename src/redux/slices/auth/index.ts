@@ -20,26 +20,23 @@ export const authSlicer = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setRefreshToken: (state) => {
+    setRefreshToken: (state: { email: string; refreshToken: string; accessToken: string }) => {
       state.email = 'data';
       state.refreshToken = 'data';
       state.accessToken = 'data';
     },
   },
   extraReducers: {
-    [loginThunk.pending.type]: (state, action: PayloadAction<any>) => {
-      console.log('==========>action', action);
+    [loginThunk.pending.type]: (state, _action: PayloadAction<any>) => {
       state.isLoading = true;
     },
-    [loginThunk.fulfilled.type]: (state, action: PayloadAction<any>) => {
-      console.log('==========>action', action);
+    [loginThunk.fulfilled.type]: (state, _action: PayloadAction<any>) => {
       state.isLoading = false;
       state.email = 'data';
       state.refreshToken = 'data';
       state.accessToken = 'data';
     },
-    [loginThunk.rejected.type]: (state, action: PayloadAction<any>) => {
-      console.log('==========>access§', action);
+    [loginThunk.rejected.type]: (state, _action: PayloadAction<any>) => {
       state.isLoading = false;
     },
   },

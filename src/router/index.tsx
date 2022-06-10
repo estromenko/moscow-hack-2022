@@ -19,4 +19,6 @@ const Router = () => {
   );
 };
 
+Router.displayName = 'Router';
+
 export default Router;

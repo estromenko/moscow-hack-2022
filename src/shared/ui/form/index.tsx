@@ -6,4 +6,6 @@ const Form: FC = ({ children }) => {
   return <div className="form">{children}</div>;
 };
 
+Form.displayName = 'Form';
+
 export default Form;
