@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { ThemeProvider } from '@mui/material';
 
 import AuthProvider from '../features/authProvider';
 import Router from '../router';
 
 import { store } from '../redux/store';
-import { ThemeProvider } from '@mui/material';
-import theme from '../shared/ui/theme';
+import { theme } from '../shared/ui';
 
 const App = () => {
   return (

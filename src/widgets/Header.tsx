@@ -1,5 +1,5 @@
 import React from 'react';
-import Container from '../shared/ui/container';
+import { Container } from '../shared/ui';
 
 const Header = () => {
   return (

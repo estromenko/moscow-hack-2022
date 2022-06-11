@@ -4,12 +4,10 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { ILoginBody } from '../../shared/api';
-
 import { loginThunk } from '../../redux/thunks/auth';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
-import AuthContainer from '../../shared/ui/authContainer';
-import Form from '../../shared/ui/form';
+import { AuthContainer, Form } from '../../shared/ui';
 
 const Login: FC = () => {
   const { accessToken, isLoading } = useAppSelector((state) => state.auth);

@@ -7,12 +7,8 @@ import { IRegisterBody } from '../../shared/api';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { regThunk } from '../../redux/thunks/auth';
 
-import Form from '../../shared/ui/form';
-import Input from '../../shared/ui/input';
-import AuthButton from '../../shared/ui/authButton';
-import AuthContainer from '../../shared/ui/authContainer';
-
 import './style.scss';
+import { AuthButton, AuthContainer, Form, Input } from '../../shared/ui';
 
 const Register: FC = () => {
   const dispatch = useAppDispatch();
