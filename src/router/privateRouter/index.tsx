@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
 
-import { useAppSelector } from '../../redux/hooks';
 import Header from '../../widgets/Header';
 import Container from '../../shared/ui/container';
 
