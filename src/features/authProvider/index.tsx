@@ -1,11 +1,11 @@
-import React, { useEffect, FC } from 'react';
+import React, { useEffect, FC, useState } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { useAppDispatch } from '../../redux/hooks';
 import { refreshThunk } from '../../redux/thunks/auth';
 
 const AuthProvider: FC = ({ children }) => {
   const dispatch = useAppDispatch();
-  const { isLoading } = useAppSelector((state) => state.auth);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const accessToken = localStorage.getItem('access_token');
   const refreshToken = localStorage.getItem('refresh_token');
@@ -19,6 +19,7 @@ const AuthProvider: FC = ({ children }) => {
         })
       );
     }
+    setIsLoading(false);
   }, []);
 
   // eslint-disable-next-line react/jsx-no-useless-fragment
