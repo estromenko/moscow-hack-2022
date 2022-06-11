@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from '../shared/ui';
 
-const Header = () => {
+const Footer = () => {
   return (
     <header>
       <Container>
@@ -11,6 +11,6 @@ const Header = () => {
   );
 };
 
-Header.displayName = 'Header';
+Footer.displayName = 'Footer';
 
-export default Header;
+export default Footer;

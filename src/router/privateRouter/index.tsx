@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
 import { useAppSelector } from '../../redux/hooks';
 
-import Header from '../../widgets/Header';
+import Footer from '../../widgets/Footer';
 import { Container } from '../../shared/ui';
 
 const PrivateRouter: FC = () => {
@@ -11,12 +11,12 @@ const PrivateRouter: FC = () => {
 
   return accessToken || accessTokenFromLocalStorage ? (
     <>
-      <Header />
       <div className="main-container">
         <Container>
           <Outlet />
         </Container>
       </div>
+      <Footer />
     </>
   ) : (
     <Navigate to="/login" />
