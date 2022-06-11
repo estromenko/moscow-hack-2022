@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { loginThunk } from '../../thunks/auth';
+import { ILoginResult, IRegisterResponse, IRefreshBody } from '../../../shared/api';
+import { loginThunk, refreshThunk, regThunk } from '../../thunks/auth';
 
 interface IAuth {
   refreshToken: string;
@@ -27,17 +28,51 @@ export const authSlicer = createSlice({
     },
   },
   extraReducers: {
-    [loginThunk.pending.type]: (state, _action: PayloadAction<any>) => {
+    [loginThunk.pending.type]: (state) => {
       state.isLoading = true;
     },
-    [loginThunk.fulfilled.type]: (state, _action: PayloadAction<any>) => {
+    [loginThunk.fulfilled.type]: (state, action: PayloadAction<ILoginResult>) => {
+      state.accessToken = action.payload.accessToken;
+      state.email = action.payload.email;
+      state.refreshToken = action.payload.refreshToken;
       state.isLoading = false;
-      state.email = 'data';
+
+      localStorage.setItem('refresh_token', action.payload.refreshToken);
+      localStorage.setItem('access_token', action.payload.accessToken);
+    },
+    [loginThunk.rejected.type]: (state) => {
+      state.isLoading = false;
+    },
+
+    [regThunk.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [regThunk.fulfilled.type]: (state, action: PayloadAction<IRegisterResponse>) => {
+      state.isLoading = false;
+      state.email = action.payload.data.email;
       state.refreshToken = 'data';
       state.accessToken = 'data';
     },
-    [loginThunk.rejected.type]: (state, _action: PayloadAction<any>) => {
+    [regThunk.rejected.type]: (state) => {
       state.isLoading = false;
+    },
+
+    [refreshThunk.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [refreshThunk.fulfilled.type]: (state, action: PayloadAction<IRefreshBody>) => {
+      state.accessToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
+      state.isLoading = false;
+
+      localStorage.setItem('refresh_token', action.payload.refreshToken);
+      localStorage.setItem('access_token', action.payload.accessToken);
+    },
+    [refreshThunk.rejected.type]: (state) => {
+      state.isLoading = false;
+
+      localStorage.removeItem('refresh_token');
+      localStorage.removeItem('access_token');
     },
   },
 });

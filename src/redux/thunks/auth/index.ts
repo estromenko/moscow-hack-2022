@@ -1,10 +1,24 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { login } from '../../../shared/api/auth';
+import { ILoginBody, IRefreshBody, IRegisterBody, login, register, refresh } from '../../../shared/api';
 
-export const loginThunk = createAsyncThunk('auth/loginThunk', async () => {
-  const data = await login();
-  localStorage.setItem('token', 'data');
+export const loginThunk = createAsyncThunk('auth/loginThunk', async (body: ILoginBody) => {
+  const { data } = await login(body);
+
+  return {
+    ...data,
+    email: body.email,
+  };
+});
+
+export const regThunk = createAsyncThunk('auth/regThunk', async (body: IRegisterBody) => {
+  const { data } = await register(body);
+
+  return data;
+});
+
+export const refreshThunk = createAsyncThunk('auth/refreshThunk', async (body: IRefreshBody) => {
+  const { data } = await refresh(body);
 
   return data;
 });
