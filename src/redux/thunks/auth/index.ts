@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { ILoginBody, IRegisterBody, login, register } from '../../../shared/api';
+import { ILoginBody, IRefreshBody, IRegisterBody, login, register, refresh } from '../../../shared/api';
 
 export const loginThunk = createAsyncThunk('auth/loginThunk', async (body: ILoginBody) => {
   const { data } = await login(body);
@@ -13,6 +13,12 @@ export const loginThunk = createAsyncThunk('auth/loginThunk', async (body: ILogi
 
 export const regThunk = createAsyncThunk('auth/regThunk', async (body: IRegisterBody) => {
   const { data } = await register(body);
+
+  return data;
+});
+
+export const refreshThunk = createAsyncThunk('auth/refreshThunk', async (body: IRefreshBody) => {
+  const { data } = await refresh(body);
 
   return data;
 });
