@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { ILoginResult, IRegisterResponse } from '../../../shared/api';
-import { loginThunk, regThunk } from '../../thunks/auth';
+import { ILoginResult, IRegisterResponse, IRefreshBody } from '../../../shared/api';
+import { loginThunk, refreshThunk, regThunk } from '../../thunks/auth';
 
 interface IAuth {
   refreshToken: string;
@@ -55,6 +55,24 @@ export const authSlicer = createSlice({
     },
     [regThunk.rejected.type]: (state) => {
       state.isLoading = false;
+    },
+
+    [refreshThunk.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [refreshThunk.fulfilled.type]: (state, action: PayloadAction<IRefreshBody>) => {
+      state.accessToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
+      state.isLoading = false;
+
+      localStorage.setItem('refresh_token', action.payload.refreshToken);
+      localStorage.setItem('access_token', action.payload.accessToken);
+    },
+    [refreshThunk.rejected.type]: (state) => {
+      state.isLoading = false;
+
+      localStorage.removeItem('refresh_token');
+      localStorage.removeItem('access_token');
     },
   },
 });

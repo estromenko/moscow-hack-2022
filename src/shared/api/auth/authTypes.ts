@@ -29,3 +29,5 @@ export interface ILoginBody {
 export interface ILoginResult extends ILoginResponse {
   email: string;
 }
+
+export interface IRefreshBody extends ILoginResponse {}
