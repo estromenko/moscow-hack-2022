@@ -6,15 +6,19 @@ import AuthProvider from '../features/authProvider';
 import Router from '../router';
 
 import { store } from '../redux/store';
+import { ThemeProvider } from '@mui/material';
+import theme from '../shared/ui/theme';
 
 const App = () => {
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <AuthProvider>
-          <Router />
-        </AuthProvider>
-      </BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <AuthProvider>
+            <Router />
+          </AuthProvider>
+        </BrowserRouter>
+      </ThemeProvider>
     </Provider>
   );
 };

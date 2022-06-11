@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
-import { TextField, Button } from '@mui/material';
+import { Typography } from '@mui/material';
 
 import { useAppDispatch } from '../../redux/hooks';
 import { regThunk } from '../../redux/thunks/auth';
@@ -8,6 +8,10 @@ import { regThunk } from '../../redux/thunks/auth';
 import Form from '../../shared/ui/form';
 import AuthContainer from '../../shared/ui/authContainer';
 import { IRegisterBody } from '../../shared/api';
+
+import './style.scss';
+import Input from '../../shared/ui/input';
+import AuthButton from '../../shared/ui/authButton';
 
 const Register: FC = () => {
   const dispatch = useAppDispatch();
@@ -21,11 +25,23 @@ const Register: FC = () => {
 
   return (
     <AuthContainer>
+      <Typography color="primary" variant="h4">
+        Регистрация
+      </Typography>
       <Form>
-        <TextField type="text" label="Имя" variant="outlined" {...register('name')} />
-        <TextField type="email" label="Email" variant="outlined" {...register('email')} />
-        <TextField type="password" label="Пароль" variant="outlined" {...register('password')} />
-        <Button onClick={handleRegister}>Зарегестрироваться</Button>
+        <Input margin="normal" color="primary" type="text" label="Имя" variant="outlined" {...register('name')} />
+        <Input margin="normal" color="primary" type="email" label="Email" variant="outlined" {...register('email')} />
+        <Input
+          margin="normal"
+          color="primary"
+          type="password"
+          label="Пароль"
+          variant="outlined"
+          {...register('password')}
+        />
+        <AuthButton className="button" color="primary" variant="contained" onClick={handleRegister}>
+          Зарегистрироваться
+        </AuthButton>
       </Form>
     </AuthContainer>
   );
