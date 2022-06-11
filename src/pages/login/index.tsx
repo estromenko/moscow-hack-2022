@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Button, TextField } from '@mui/material';
+import { Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,7 +7,7 @@ import { ILoginBody } from '../../shared/api';
 import { loginThunk } from '../../redux/thunks/auth';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
-import { AuthContainer, Form } from '../../shared/ui';
+import { AuthContainer, Form, Input } from '../../shared/ui';
 
 const Login: FC = () => {
   const { accessToken, isLoading } = useAppSelector((state) => state.auth);
@@ -31,9 +31,11 @@ const Login: FC = () => {
   return (
     <AuthContainer>
       <Form>
-        <TextField type="email" label="Email" variant="outlined" {...register('email')} />
-        <TextField type="password" label="Пароль" variant="outlined" {...register('password')} />
-        <Button onClick={handleLogin}>Зарегестрироваться</Button>
+        <Input type="email" label="Email" variant="outlined" {...register('email')} />
+        <Input type="password" label="Пароль" variant="outlined" {...register('password')} />
+        <Button variant="contained" onClick={handleLogin}>
+          Войти
+        </Button>
       </Form>
     </AuthContainer>
   );
