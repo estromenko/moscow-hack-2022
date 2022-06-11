@@ -14,7 +14,10 @@ export const loginThunk = createAsyncThunk('auth/loginThunk', async (body: ILogi
 export const regThunk = createAsyncThunk('auth/regThunk', async (body: IRegisterBody) => {
   const { data } = await register(body);
 
-  return data;
+  return {
+    ...data,
+    email: body.email,
+  };
 });
 
 export const refreshThunk = createAsyncThunk('auth/refreshThunk', async (body: IRefreshBody) => {

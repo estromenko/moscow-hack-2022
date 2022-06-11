@@ -1,27 +1,38 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
 
-import { useAppDispatch } from '../../redux/hooks';
+import { IRegisterBody } from '../../shared/api';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { regThunk } from '../../redux/thunks/auth';
 
 import Form from '../../shared/ui/form';
-import AuthContainer from '../../shared/ui/authContainer';
-import { IRegisterBody } from '../../shared/api';
-
-import './style.scss';
 import Input from '../../shared/ui/input';
 import AuthButton from '../../shared/ui/authButton';
+import AuthContainer from '../../shared/ui/authContainer';
+
+import './style.scss';
 
 const Register: FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { isLoading, accessToken } = useAppSelector((state) => state.auth);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
   const { register, getValues } = useForm<IRegisterBody>();
 
   const handleRegister = () => {
     const values = getValues();
 
     dispatch(regThunk(values));
+    setIsAuth(true);
   };
+
+  useEffect(() => {
+    if (isAuth && accessToken) {
+      navigate('/');
+    }
+  }, [isLoading]);
 
   return (
     <AuthContainer>

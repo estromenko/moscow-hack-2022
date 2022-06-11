@@ -1,15 +1,3 @@
-export interface IRegisterResponse {
-  data: {
-    email: string;
-    name: string;
-    roles: { name: string }[];
-    refresh_token: null | string;
-    id: number;
-  };
-  meta: null;
-  total: null;
-}
-
 export interface ILoginResponse {
   accessToken: string;
   refreshToken: string;
@@ -31,3 +19,5 @@ export interface ILoginResult extends ILoginResponse {
 }
 
 export interface IRefreshBody extends ILoginResponse {}
+export interface IRegisterResponse extends ILoginResponse {}
+export interface IRegisterResult extends ILoginResult {}
