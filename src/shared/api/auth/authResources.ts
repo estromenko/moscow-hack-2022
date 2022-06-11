@@ -1,9 +1,10 @@
-import api from '../api';
-import { IRegisterResponse, IRegisterBody } from './authTypes';
 import { AxiosResponse } from 'axios';
 
-export const login = () => {
-  return api.post('auth/login');
+import api from '../api';
+import { IRegisterResponse, IRegisterBody, ILoginBody, ILoginResponse } from './authTypes';
+
+export const login = (body: ILoginBody): Promise<AxiosResponse<ILoginResponse>> => {
+  return api.post<ILoginResponse>('auth/login', body);
 };
 
 export const register = (body: IRegisterBody): Promise<AxiosResponse<IRegisterResponse>> => {
