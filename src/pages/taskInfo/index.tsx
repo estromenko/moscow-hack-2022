@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { addUserToTask, getOneByIdTask, ICityPointResponse } from '../../shared/api';
 import { useAppSelector } from '../../redux/hooks';
@@ -9,6 +9,7 @@ import taskInfoImage from '../../assets/taskInfo1.png';
 import taskInfoImage2 from '../../assets/taskInfo2.png';
 
 const TaskInfo: FC = () => {
+  const navigate = useNavigate();
   const { tasks } = useAppSelector((state) => state.tasks);
   const userId = useAppSelector((state) => state.auth.id);
   const { id } = useParams();
@@ -18,11 +19,11 @@ const TaskInfo: FC = () => {
   const task = tasks.find((el) => el.id === Number(id));
   // @ts-ignore
   const users = task?.users.find((el) => el.id === userId);
-  console.log('==========>users', task);
 
   const handleClickButton = async () => {
     if (id && taskInfo?.id) {
-      await addUserToTask(Number(id), taskInfo?.id);
+      await addUserToTask(Number(userId), taskInfo?.id);
+      navigate('/home');
     }
   };
 
@@ -33,7 +34,6 @@ const TaskInfo: FC = () => {
   };
 
   useEffect(() => {
-    console.log('==========>1', 1);
     initData();
   }, []);
 
