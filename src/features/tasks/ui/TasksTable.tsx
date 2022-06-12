@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { tasksThunk } from '../model';
 
 import TaskCard from './TaskCard';
-import { Card, IPlacemark, MultiSelect } from '../../../shared/ui';
+import { Card, IPlacemark, MultiSelect, MultiSelectFormat } from '../../../shared/ui';
 
 interface ITasksTable {
   activeTab: number;
@@ -14,20 +14,22 @@ interface ITasksTable {
 
 const TasksTable: FC<ITasksTable> = ({ activeTab }) => {
   const dispatch = useAppDispatch();
-  const [personName, setPersonName] = useState<string[]>([]);
+  const [personName, setPersonName] = useState<MultiSelectFormat[]>([]);
   const [placemarks, setPlacemarks] = useState<IPlacemark[]>([]);
   const { tasks } = useAppSelector((state) => state.tasks);
   const names = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder',
+    {
+      name: '123123',
+      id: 1,
+    },
+    {
+      name: '11111',
+      id: 2,
+    },
+    {
+      name: '4444',
+      id: 3,
+    },
   ];
 
   useEffect(() => {
@@ -42,11 +44,23 @@ const TasksTable: FC<ITasksTable> = ({ activeTab }) => {
     setPlacemarks((prev) => [...prev, ...filteredPlacemarks]);
   }, [tasks]);
 
-  const handleChangeSelect = (event: SelectChangeEvent<typeof personName>) => {
+  const handleChangeSelect = (event: SelectChangeEvent<MultiSelectFormat[]>) => {
     const {
       target: { value },
     } = event;
-    setPersonName(typeof value === 'string' ? value.split(',') : value);
+
+    const lastValue = value[value.length - 1];
+    if (Array.isArray(value) && typeof lastValue !== 'string') {
+      let isDouble = 0;
+      value.forEach((el) => {
+        if (el.name === lastValue.name) {
+          isDouble += 1;
+        }
+      });
+
+      const filteredCategories = value.filter((el) => (el.name === lastValue.name ? isDouble !== 2 : true));
+      setPersonName(filteredCategories);
+    }
   };
 
   return (

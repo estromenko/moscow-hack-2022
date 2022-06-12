@@ -1,8 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { tasks } from '../../../shared/api';
+import { createTask, getTasks, ICityPointCreate } from '../../../shared/api';
 
 export const tasksThunk = createAsyncThunk('tasks/tasksThunk', async () => {
-  const { data } = await tasks();
+  const { data } = await getTasks();
+
+  return data;
+});
+
+export const createEventThunk = createAsyncThunk('create/event', async (body: ICityPointCreate) => {
+  const { data } = await createTask(body);
 
   return data;
 });

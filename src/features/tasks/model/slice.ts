@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { ICityPoint } from '../../../shared/api';
-import { tasksThunk } from './thunk';
+import { ICityPointResponse } from '../../../shared/api';
+import { createEventThunk, tasksThunk } from './thunk';
 
 interface ITasks {
-  tasks: ICityPoint[];
+  tasks: ICityPointResponse[];
   isLoading: boolean;
 }
 
@@ -21,11 +21,22 @@ export const tasksSlicer = createSlice({
     [tasksThunk.pending.type]: (state) => {
       state.isLoading = true;
     },
-    [tasksThunk.fulfilled.type]: (state, action: PayloadAction<ICityPoint[]>) => {
+    [tasksThunk.fulfilled.type]: (state, action: PayloadAction<ICityPointResponse[]>) => {
       state.isLoading = false;
       state.tasks = action.payload;
     },
     [tasksThunk.rejected.type]: (state) => {
+      state.isLoading = false;
+    },
+
+    [createEventThunk.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [createEventThunk.fulfilled.type]: (state, action: PayloadAction<ICityPointResponse>) => {
+      state.isLoading = false;
+      state.tasks = [...state.tasks, action.payload];
+    },
+    [createEventThunk.rejected.type]: (state) => {
       state.isLoading = false;
     },
   },

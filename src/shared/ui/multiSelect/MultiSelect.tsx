@@ -2,12 +2,13 @@ import React, { FC } from 'react';
 import { Box, Chip, FormControl, InputLabel, MenuItem, OutlinedInput, Select } from '@mui/material';
 import { Theme, useTheme } from '@mui/material/styles';
 import { SelectChangeEvent } from '@mui/material/Select';
+import { MultiSelectFormat } from './types';
 
 interface IMultiSelect {
   header: string;
-  names: string[];
-  currentValue: string[];
-  handleChange: (event: SelectChangeEvent<string[]>) => void;
+  names: MultiSelectFormat[];
+  currentValue: MultiSelectFormat[];
+  handleChange: (event: SelectChangeEvent<MultiSelectFormat[]>) => void;
 }
 
 const MultiSelect: FC<IMultiSelect> = ({ header, names, currentValue, handleChange }) => {
@@ -24,10 +25,11 @@ const MultiSelect: FC<IMultiSelect> = ({ header, names, currentValue, handleChan
   };
 
   // eslint-disable-next-line no-shadow
-  const getStyles = (name: string, personName: readonly string[], theme: Theme) => {
+  const getStyles = (name: string, personName: readonly MultiSelectFormat[], theme: Theme) => {
+    const namesList = personName.map((el) => el.name);
     return {
       fontWeight:
-        personName.indexOf(name) === -1 ? theme.typography.fontWeightRegular : theme.typography.fontWeightMedium,
+        namesList.indexOf(name) === -1 ? theme.typography.fontWeightRegular : theme.typography.fontWeightMedium,
     };
   };
 
@@ -43,16 +45,17 @@ const MultiSelect: FC<IMultiSelect> = ({ header, names, currentValue, handleChan
         input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
         renderValue={(selected) => (
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-            {selected.map((value: string) => (
-              <Chip key={value} label={value} />
+            {selected.map((value: MultiSelectFormat) => (
+              <Chip key={value.id} label={value.name} />
             ))}
           </Box>
         )}
         MenuProps={MenuProps}
       >
         {names.map((name) => (
-          <MenuItem key={name} value={name} style={getStyles(name, currentValue, theme)}>
-            {name}
+          // @ts-ignore
+          <MenuItem key={name.id} value={name} style={getStyles(name.name, currentValue, theme)}>
+            {name.name}
           </MenuItem>
         ))}
       </Select>
