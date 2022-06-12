@@ -20,7 +20,7 @@ export const getOneByIdTask = (id: number): Promise<AxiosResponse<ICityPointResp
 };
 
 export const getTasksByUserId = (id: number): Promise<AxiosResponse<IUserResponse>> => {
-  return api.post(`/users/${id}`);
+  return api.get(`/users/${id}`);
 };
 
 export const getCategories = (): Promise<AxiosResponse<ICategoriesResponse[]>> => {

@@ -1,33 +1,22 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
 import rabbit from '../../assets/profileRabbit.png';
 import star from '../../assets/star.png';
 import profileTasks from '../../assets/profileTasks.png';
 import gift from '../../assets/gift.png';
 import { ProfileTask } from '../../features/tasks/ui';
-
-const mock = [
-  {
-    id: 1,
-    title: 'test title1',
-    body: 'test body1',
-  },
-  {
-    id: 2,
-    title: 'test title2',
-    body: 'test body2',
-  },
-  {
-    id: 3,
-    title: 'test title3',
-    body: 'test body3',
-  },
-];
+import { getTasksByIdThunk } from '../../features/tasks';
 
 const Home: FC = () => {
-  const { name } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const { name, id } = useAppSelector((state) => state.auth);
+  const { tasks } = useAppSelector((state) => state.tasks);
+
+  useEffect(() => {
+    dispatch(getTasksByIdThunk(id || 0));
+  }, []);
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
@@ -72,13 +61,13 @@ const Home: FC = () => {
         </Typography>
       </Box>
       <Box width="90%">
-        {mock.map((el) => (
+        {tasks.map((el) => (
           <ProfileTask
             image={gift}
             id={el.id}
             data={{
-              title: el.title,
-              body: el.body,
+              title: el.name,
+              body: el.address,
             }}
           />
         ))}
