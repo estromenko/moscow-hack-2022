@@ -26,11 +26,11 @@ const mock = [
 ];
 
 const Profile: FC = () => {
-  const { email } = useAppSelector((state) => state.auth);
+  const { name } = useAppSelector((state) => state.auth);
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
       <Typography color="primary.main" fontWeight="bold" variant="h4" textAlign="center">
-        Привет, {email}!
+        Привет, {name}!
       </Typography>
       <Box display="flex" flexDirection="row" marginTop="50px" width="90%">
         <img src={rabbit} alt="rabbit" />

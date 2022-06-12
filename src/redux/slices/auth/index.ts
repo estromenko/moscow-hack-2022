@@ -1,12 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { ILoginResult, IRefreshBody, IRegisterResult } from '../../../shared/api';
-import { loginThunk, refreshThunk, regThunk } from '../../thunks/auth';
+import { ILoginResult, IRefreshBody, IRegisterResult, IUserProfileResponse } from '../../../shared/api';
+import { loginThunk, refreshThunk, regThunk, userProfileThunk } from '../../thunks/auth';
 
 interface IAuth {
   refreshToken: string;
   accessToken: string;
   email: string;
+  id?: number;
+  name?: string;
   isLoading: boolean;
 }
 
@@ -76,6 +78,14 @@ export const authSlicer = createSlice({
 
       localStorage.removeItem('refresh_token');
       localStorage.removeItem('access_token');
+    },
+
+    [userProfileThunk.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [userProfileThunk.fulfilled.type]: (state, action: PayloadAction<IUserProfileResponse>) => {
+      state.id = action.payload.id;
+      state.name = action.payload.name;
     },
   },
 });

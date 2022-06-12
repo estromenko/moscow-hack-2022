@@ -6,29 +6,19 @@ import homeImage from '../assets/home.png';
 import tasksImage from '../assets/tasks.png';
 import giftImage from '../assets/gift.png';
 import ratingImage from '../assets/rating.png';
-import profileImage from '../assets/settings.png';
-import { Link } from 'react-router-dom';
+import profileImage from '../assets/profile.png';
+import { FooterIcon } from '../shared/ui/footerIcon';
 
 const Footer = () => {
   return (
     <footer>
       <Container>
         <Box bgcolor="primary.main" display="flex" flexDirection="row" justifyContent="space-around" padding="10px">
-          <Link to="/">
-            <img src={homeImage} alt="home" />
-          </Link>
-          <Link to="/tasks">
-            <img src={tasksImage} alt="tasks" />
-          </Link>
-          <Link to="/gifts">
-            <img src={giftImage} alt="gifts" />
-          </Link>
-          <Link to="/rating">
-            <img src={ratingImage} alt="rating" />
-          </Link>
-          <Link to="/profile">
-            <img src={profileImage} alt="profile" />
-          </Link>
+          <FooterIcon image={homeImage} label="главная" path="/" />
+          <FooterIcon image={tasksImage} label="задания" path="/tasks" />
+          <FooterIcon image={giftImage} label="мероприятия" path="/gifts" />
+          <FooterIcon image={ratingImage} label="рейтинг" path="/rating" />
+          <FooterIcon image={profileImage} label="профиль" path="/profile" />
         </Box>
       </Container>
     </footer>

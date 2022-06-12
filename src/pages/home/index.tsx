@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Button, Grid, Typography } from '@mui/material';
 
 import rabbit1 from '../../assets/rabbit1.png';
@@ -7,8 +7,21 @@ import rabbit3 from '../../assets/rabbit3.png';
 import helpImage from '../../assets/help.png';
 import cup from '../../assets/cup.png';
 import percent from '../../assets/percent.png';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { userProfileThunk } from '../../redux/thunks/auth';
 
 const Home = () => {
+  const dispatch = useAppDispatch();
+  const { id, name } = useAppSelector((state) => state.auth);
+
+  const needToGetUserProfile = id === undefined || name === undefined;
+
+  useEffect(() => {
+    if (needToGetUserProfile) {
+      dispatch(userProfileThunk());
+    }
+  }, [needToGetUserProfile]);
+
   return (
     <Box display="flex" flexDirection="column" gap="10px" justifyContent="center" boxSizing="border-box">
       <Typography variant="h4" color="primary" textAlign="center" marginTop="50px">

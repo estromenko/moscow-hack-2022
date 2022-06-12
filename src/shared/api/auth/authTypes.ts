@@ -21,3 +21,8 @@ export interface ILoginResult extends ILoginResponse {
 export interface IRefreshBody extends ILoginResponse {}
 export interface IRegisterResponse extends ILoginResponse {}
 export interface IRegisterResult extends ILoginResult {}
+
+export interface IUserProfileResponse {
+  id: number;
+  name: string;
+}

@@ -15,7 +15,7 @@ const api = axios.create({
 // eslint-disable-next-line consistent-return
 api.interceptors.request.use((config: AxiosRequestConfig) => {
   if (config.headers) {
-    config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`;
+    config.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`;
 
     return config;
   }
@@ -29,12 +29,12 @@ api.interceptors.response.use(
       const originalRequest = error.config;
       if (error.response.status === 401) {
         const response = await axios.post<IAxiosRefreshResponse>(`${API_URL}auth/refresh`, {
-          access_token: localStorage.getItem('accessToken'),
-          refresh_token: localStorage.getItem('refreshToken'),
+          access_token: localStorage.getItem('access_token'),
+          refresh_token: localStorage.getItem('refresh_token'),
         });
 
-        localStorage.setItem('accessToken', response.data.accessToken);
-        localStorage.setItem('refreshToken', response.data.refreshToken);
+        localStorage.setItem('access_token', response.data.accessToken);
+        localStorage.setItem('refresh_token', response.data.refreshToken);
 
         return api.request(originalRequest);
       }
