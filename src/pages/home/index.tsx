@@ -28,6 +28,7 @@ const mock = [
 
 const Home: FC = () => {
   const { name } = useAppSelector((state) => state.auth);
+
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
       <Typography color="primary.main" fontWeight="bold" variant="h4" textAlign="center">
