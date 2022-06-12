@@ -6,6 +6,7 @@ import rabbit from '../../assets/profileRabbit.png';
 import star from '../../assets/star.png';
 import profileTasks from '../../assets/profileTasks.png';
 import gift from '../../assets/gift.png';
+import { ProfileTask } from '../../features/tasks/ui';
 
 const mock = [
   {
@@ -71,21 +72,14 @@ const Profile: FC = () => {
       </Box>
       <Box width="90%">
         {mock.map((el) => (
-          <Box
-            key={el.id}
-            bgcolor="primary.main"
-            margin="10px 0px"
-            borderRadius="10px"
-            padding="10px"
-            display="flex"
-            alignItems="center"
-          >
-            <img src={gift} alt="gift" />
-            <Box width="100%" textAlign="center">
-              <Typography fontWeight="bold">{el.title}</Typography>
-              {el.body}
-            </Box>
-          </Box>
+          <ProfileTask
+            image={gift}
+            id={el.id}
+            data={{
+              title: el.title,
+              body: el.body,
+            }}
+          />
         ))}
       </Box>
     </Box>

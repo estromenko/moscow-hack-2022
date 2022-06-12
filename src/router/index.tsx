@@ -10,6 +10,7 @@ import Rating from '../pages/rating';
 import Gifts from '../pages/gifts';
 import Profile from '../pages/profile';
 import Organization from '../pages/organization';
+import NotFound from '../pages/notFound';
 
 const Router = () => {
   return (
@@ -31,6 +32,7 @@ const Router = () => {
       </Route>
       <Route path="/profile" element={<PrivateRouter />}>
         <Route path="/profile" element={<Profile />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
       <Route path="/organization" element={<PrivateRouter />}>
         <Route path="/organization" element={<Organization />} />
