@@ -14,6 +14,7 @@ import NotFound from '../pages/notFound';
 import Settings from '../pages/settings';
 import Events from '../pages/events';
 import OrganisationSettings from '../pages/organisationSettings';
+import TaskInfo from '../pages/taskInfo';
 
 const Router = () => {
   return (
@@ -45,6 +46,9 @@ const Router = () => {
       </Route>
       <Route path="/events" element={<PrivateRouter />}>
         <Route path="/events" element={<Events />} />
+      </Route>
+      <Route path="/tasks/:id" element={<PrivateRouter />}>
+        <Route path="/tasks/:id" element={<TaskInfo />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

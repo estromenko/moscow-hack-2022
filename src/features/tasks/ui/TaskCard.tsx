@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { Box, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import milk from '../../../assets/milk.png';
 
@@ -7,9 +8,16 @@ interface ITasksCard {
   header: string;
   description: string;
   street: string;
+  id: number;
 }
 
-const TaskCard: FC<ITasksCard> = ({ description, header, street }) => {
+const TaskCard: FC<ITasksCard> = ({ description, header, street, id }) => {
+  const navigate = useNavigate();
+
+  const handleRedirect = () => {
+    navigate(`/tasks/${id}`);
+  };
+
   return (
     <Box
       bgcolor="primary.main"
@@ -19,6 +27,7 @@ const TaskCard: FC<ITasksCard> = ({ description, header, street }) => {
       width="100%"
       padding="10px"
       boxSizing="border-box"
+      onClick={handleRedirect}
     >
       <Box display="flex" alignItems="center">
         <img src={milk} alt="milk" />

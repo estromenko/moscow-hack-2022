@@ -4,6 +4,13 @@ export interface ICategory {
   points: string[];
 }
 
+export interface IMana {
+  id: number;
+  mana_points: number;
+  createdDate: Date;
+  users: string[];
+}
+
 export interface IDifficult extends ICategory {}
 
 export interface IPermission {
@@ -32,6 +39,16 @@ export interface ICityPointCreate {
   dateEnd: string;
 }
 
+export interface IUserResponse {
+  id: number;
+  name: string;
+  email: string;
+  roles: IRole[];
+  // eslint-disable-next-line no-use-before-define
+  city_point: ICityPointResponse[];
+  mana: IMana[];
+}
+
 export interface ICityPointResponse {
   id: number;
   name: string;
@@ -47,16 +64,14 @@ export interface ICityPointResponse {
   address: string;
   dateStart: Date;
   dateEnd: Date;
-}
-
-export interface IUserResponse {
-  id: number;
-  name: string;
-  email: string;
-  roles: IRole[];
+  users?: IUserResponse[];
 }
 
 export interface ICategoriesResponse {
   id: number;
   name: string;
+}
+
+export interface IAddUserToTaskResponse extends ICityPointResponse {
+  users: IUserResponse[];
 }

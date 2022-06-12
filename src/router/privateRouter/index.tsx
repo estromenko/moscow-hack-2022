@@ -9,7 +9,7 @@ const PrivateRouter: FC = () => {
   const accessTokenFromLocalStorage = localStorage.getItem('access_token');
 
   // eslint-disable-next-line no-constant-condition
-  return accessToken || accessTokenFromLocalStorage || true ? (
+  return accessToken || accessTokenFromLocalStorage ? (
     <>
       <div className="main-container">
         <Outlet />

@@ -1,12 +1,12 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Box } from '@mui/material';
+import { Box, MenuItem, Select } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { getCategoriesThunk, getTasksByIdThunk, tasksThunk } from '../model';
+import { getCategoriesThunk, getTasksByCategoryIdThunk, getTasksByIdThunk, tasksThunk } from '../model';
 
 import TaskCard from './TaskCard';
-import { Card, IPlacemark, MultiSelect, MultiSelectFormat } from '../../../shared/ui';
+import { Card, IPlacemark } from '../../../shared/ui';
 import { ICityPointResponse } from '../../../shared/api';
 
 interface ITasksTable {
@@ -17,10 +17,10 @@ interface ITasksTable {
 const TasksTable: FC<ITasksTable> = ({ activeTab, isCard }) => {
   const dispatch = useAppDispatch();
   const { id } = useAppSelector((state) => state.auth);
-  const [personName, setPersonName] = useState<MultiSelectFormat[]>([]);
   const [placemarks, setPlacemarks] = useState<IPlacemark[]>([]);
   const [tasksByDate, setTasksByDate] = useState<ICityPointResponse[]>([]);
   const { tasks, categories } = useAppSelector((state) => state.tasks);
+  const [category, setCategory] = useState<string>('');
 
   useEffect(() => {
     dispatch(getCategoriesThunk());
@@ -30,7 +30,7 @@ const TasksTable: FC<ITasksTable> = ({ activeTab, isCard }) => {
     } else {
       dispatch(getTasksByIdThunk(id || 0));
     }
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     if (!isCard) {
@@ -39,43 +39,36 @@ const TasksTable: FC<ITasksTable> = ({ activeTab, isCard }) => {
   }, [activeTab, tasks]);
 
   useEffect(() => {
-    const filteredPlacemarks: IPlacemark[] = tasks.map((el) => ({
-      name: el.address,
-      coord: [Number(el.cords.lon), Number(el.cords.lat)],
-    }));
-    setPlacemarks((prev) => [...prev, ...filteredPlacemarks]);
+    if (isCard) {
+      const filteredPlacemarks: IPlacemark[] = tasks.map((el) => ({
+        name: el.address,
+        coord: [Number(el.cords?.lon), Number(el.cords?.lat)],
+      }));
+      setPlacemarks(() => [...filteredPlacemarks]);
+    }
   }, [tasks]);
 
-  const handleChangeSelect = (event: SelectChangeEvent<MultiSelectFormat[]>) => {
-    const {
-      target: { value },
-    } = event;
-
-    const lastValue = value[value.length - 1];
-    if (Array.isArray(value) && typeof lastValue !== 'string') {
-      let isDouble = 0;
-      value.forEach((el) => {
-        if (el.name === lastValue.name) {
-          isDouble += 1;
-        }
-      });
-
-      const filteredCategories = value.filter((el) => (el.name === lastValue.name ? isDouble !== 2 : true));
-      setPersonName(filteredCategories);
-    }
+  const handleChangeSelect = (event: SelectChangeEvent) => {
+    setCategory(event.target.value);
+    dispatch(getTasksByCategoryIdThunk(event.target.value));
   };
 
+  console.log('==========>tasks', tasks);
   return (
     <Box display="flex" flexDirection="column" gap="10px" marginTop="30px">
       <Box display="flex" justifyContent="space-between" padding="0 6px 0 30px" boxSizing="border-box">
-        <MultiSelect header="Тэг" names={categories} currentValue={personName} handleChange={handleChangeSelect} />
+        <Select value={category} label="Age" onChange={handleChangeSelect} fullWidth>
+          {categories.map((categor) => (
+            <MenuItem value={categor.id}>{categor.name}</MenuItem>
+          ))}
+        </Select>
       </Box>
       {isCard ? (
         <>
           {activeTab === 0 && (
             <Box display="flex" flexDirection="column" gap="10px" padding="0 6px 0 30px" boxSizing="border-box">
               {tasks.map((el) => (
-                <TaskCard description={el.description} header={el.name} street={el.address} />
+                <TaskCard id={el.id} description={el.description} header={el.name} street={el.address} />
               ))}
             </Box>
           )}
@@ -93,7 +86,7 @@ const TasksTable: FC<ITasksTable> = ({ activeTab, isCard }) => {
       ) : (
         <Box display="flex" flexDirection="column" gap="10px" padding="0 6px 0 30px" boxSizing="border-box">
           {tasksByDate.map((el) => (
-            <TaskCard description={el.description} header={el.name} street={el.address} />
+            <TaskCard id={el.id} description={el.description} header={el.name} street={el.address} />
           ))}
         </Box>
       )}

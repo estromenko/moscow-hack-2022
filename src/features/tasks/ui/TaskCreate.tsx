@@ -39,6 +39,7 @@ const style = {
 const TaskCreate: FC<ITaskCreate> = ({ isOpen, handleClose }) => {
   const dispatch = useAppDispatch();
   const { categories } = useAppSelector((state) => state.tasks);
+  const { id } = useAppSelector((state) => state.auth);
   const { register, getValues, control } = useForm<IFormCollection>();
   const [placemarks, setPlacemarks] = useState<IPlacemark[]>([]);
   const [categoryIds, setCategoryIds] = useState<MultiSelectFormat[]>([]);
@@ -81,7 +82,8 @@ const TaskCreate: FC<ITaskCreate> = ({ isOpen, handleClose }) => {
     const coords = placemarks[0];
     const startDate = getTime(dates.startDate || new Date());
     const endDate = getTime(dates.endDate || new Date());
-    const task: ICityPointCreate = {
+    const task: ICityPointCreate & { userId: number } = {
+      userId: id || 0,
       name: values.name,
       address: coords.name,
       description: values.description,
