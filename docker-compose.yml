@@ -1,0 +1,14 @@
+version: '3.3'
+service:
+  app:
+    image: node:16.15.1
+    working_dir: /app
+    env_file:
+      - .env
+    volumes:
+      - ./:/app
+    ports:
+      - 3000:3000
+    command: sh -c "yarn && yarn start"
+    depends_on:
+      - db
