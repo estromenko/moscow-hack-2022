@@ -1,12 +1,13 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
 import rabbit from '../../assets/profileRabbit.png';
 import star from '../../assets/star.png';
 import profileTasks from '../../assets/profileTasks.png';
 import gift from '../../assets/gift.png';
 import { ProfileTask } from '../../features/tasks/ui';
+import { userProfileThunk } from '../../redux/thunks/auth';
 
 const mock = [
   {
@@ -27,7 +28,17 @@ const mock = [
 ];
 
 const Home: FC = () => {
-  const { name } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const { id, name } = useAppSelector((state) => state.auth);
+
+  const needToGetUserProfile = id === undefined || name === undefined;
+
+  useEffect(() => {
+    if (needToGetUserProfile) {
+      dispatch(userProfileThunk());
+    }
+  }, [needToGetUserProfile]);
+
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
       <Typography color="primary.main" fontWeight="bold" variant="h4" textAlign="center">
