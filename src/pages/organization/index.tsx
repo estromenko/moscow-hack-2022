@@ -26,4 +26,6 @@ const Organization: FC = () => {
   );
 };
 
+Organization.displayName = 'Organization';
+
 export default Organization;

@@ -134,6 +134,7 @@ const TaskCreate: FC<ITaskCreate> = ({ isOpen, handleClose }) => {
           <Controller
             name="difficultId"
             control={control}
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             render={({ field: { onChange, onBlur, value } }) => (
               <Select onChange={onChange} value={value || 1} label="Сложность">
                 <MenuItem value={1}>Легкая</MenuItem>
@@ -172,5 +173,7 @@ const TaskCreate: FC<ITaskCreate> = ({ isOpen, handleClose }) => {
     </Modal>
   );
 };
+
+TaskCreate.displayName = 'TaskCreate';
 
 export default TaskCreate;
