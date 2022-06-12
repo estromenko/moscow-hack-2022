@@ -80,6 +80,7 @@ const TaskCreate: FC<ITaskCreate> = ({ isOpen, handleClose }) => {
   const handleSave = () => {
     const values = getValues();
     const coords = placemarks[0];
+    console.log(placemarks);
     const startDate = getTime(dates.startDate || new Date());
     const endDate = getTime(dates.endDate || new Date());
     const task: ICityPointCreate & { userId: number } = {
