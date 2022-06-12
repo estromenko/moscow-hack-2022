@@ -9,12 +9,11 @@ const PrivateRouter: FC = () => {
   const { accessToken } = useAppSelector((state) => state.auth);
   const accessTokenFromLocalStorage = localStorage.getItem('access_token');
 
-  return accessToken || accessTokenFromLocalStorage ? (
+  // eslint-disable-next-line no-constant-condition
+  return accessToken || accessTokenFromLocalStorage || true ? (
     <>
       <div className="main-container">
-        <Container>
-          <Outlet />
-        </Container>
+        <Outlet />
       </div>
       <Footer />
     </>

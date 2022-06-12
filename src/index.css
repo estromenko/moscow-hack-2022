@@ -39,8 +39,12 @@ header {
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
+  background: #e04d4d;
+  height: calc(100% - 66px);
+  overflow-y: scroll;
 }
 
 footer {
+  height: 66px;
   flex: 0 0 auto;
 }

@@ -5,3 +5,4 @@ export * from './authContainer';
 export * from './input';
 export * from './theme';
 export * from './container';
+export * from './multiSelect';
