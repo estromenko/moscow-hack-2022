@@ -15,6 +15,7 @@ import Settings from '../pages/settings';
 import Events from '../pages/events';
 import OrganisationSettings from '../pages/organisationSettings';
 import TaskInfo from '../pages/taskInfo';
+import Personal from '../pages/personal';
 
 const Router = () => {
   return (
@@ -46,6 +47,9 @@ const Router = () => {
       </Route>
       <Route path="/events" element={<PrivateRouter />}>
         <Route path="/events" element={<Events />} />
+      </Route>
+      <Route path="/personal" element={<PrivateRouter />}>
+        <Route path="/personal" element={<Personal />} />
       </Route>
       <Route path="/tasks/:id" element={<PrivateRouter />}>
         <Route path="/tasks/:id" element={<TaskInfo />} />

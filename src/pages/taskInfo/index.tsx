@@ -144,4 +144,6 @@ const TaskInfo: FC = () => {
   );
 };
 
+TaskInfo.displayName = 'TaskInfo';
+
 export default TaskInfo;
