@@ -58,7 +58,7 @@ module.exports = {
     'react/no-unused-prop-types': 'off',
     'react/prefer-es6-class': 'error',
     'react/prop-types': 'off',
-    'react/no-array-index-key': 'error',
+    'react/no-array-index-key': 'warn',
     'react/no-set-state': 'off',
     'react/button-has-type': 'off',
     'react-hooks/exhaustive-deps': 'off',
@@ -117,14 +117,7 @@ module.exports = {
       },
     },
     {
-      files: [
-        '**/*.test.js',
-        '**/*.test.jsx',
-        '**/*.test.tsx',
-        '**/*.spec.js',
-        '**/*.spec.jsx',
-        '**/*.spec.tsx',
-      ],
+      files: ['**/*.test.js', '**/*.test.jsx', '**/*.test.tsx', '**/*.spec.js', '**/*.spec.jsx', '**/*.spec.tsx'],
       env: {
         jest: true,
       },

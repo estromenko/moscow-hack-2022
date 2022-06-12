@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { tasksThunk } from '../model';
 
 import TaskCard from './TaskCard';
-import { MultiSelect } from '../../../shared/ui';
+import { Card, IPlacemark, MultiSelect } from '../../../shared/ui';
 
 const mock = [
   {
@@ -192,11 +192,14 @@ const mock = [
     dateEnd: '2022-06-11T17:36:02.330Z',
   },
 ];
+interface ITasksTable {
+  activeTab: number;
+}
 
-const TasksTable: FC = () => {
+const TasksTable: FC<ITasksTable> = ({ activeTab }) => {
   const dispatch = useAppDispatch();
   const [personName, setPersonName] = useState<string[]>([]);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [placemarks, setPlacemarks] = useState<IPlacemark[]>([]);
   const { tasks } = useAppSelector((state) => state.tasks);
   const names = [
     'Oliver Hansen',
@@ -215,6 +218,14 @@ const TasksTable: FC = () => {
     dispatch(tasksThunk());
   }, []);
 
+  useEffect(() => {
+    const filteredPlacemarks: IPlacemark[] = tasks.map((el) => ({
+      name: el.address,
+      coord: [Number(el.cords.lon), Number(el.cords.lat)],
+    }));
+    setPlacemarks((prev) => [...prev, ...filteredPlacemarks]);
+  }, [tasks]);
+
   const handleChangeSelect = (event: SelectChangeEvent<typeof personName>) => {
     const {
       target: { value },
@@ -227,11 +238,23 @@ const TasksTable: FC = () => {
       <Box display="flex" justifyContent="space-between" padding="0 6px 0 30px" boxSizing="border-box">
         <MultiSelect header="Тэг" names={names} currentValue={personName} handleChange={handleChangeSelect} />
       </Box>
-      <Box display="flex" flexDirection="column" gap="10px" padding="0 6px 0 30px" boxSizing="border-box">
-        {mock.map((el) => (
-          <TaskCard description={el.description} header={el.name} street={el.address} />
-        ))}
-      </Box>
+      {activeTab === 0 && (
+        <Box display="flex" flexDirection="column" gap="10px" padding="0 6px 0 30px" boxSizing="border-box">
+          {tasks.map((el) => (
+            <TaskCard description={el.description} header={el.name} street={el.address} />
+          ))}
+        </Box>
+      )}
+      {activeTab === 1 && (
+        <>
+          <Card placemarks={placemarks} setPlacemarks={setPlacemarks} />
+          <Box>
+            {placemarks.map((el) => (
+              <p>{el.name}</p>
+            ))}
+          </Box>
+        </>
+      )}
     </Box>
   );
 };

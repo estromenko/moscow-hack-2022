@@ -1,8 +1,11 @@
 import React, { useRef, FC, Dispatch, SetStateAction } from 'react';
-import { YMaps, Map, Placemark, YMapsApi } from 'react-yandex-maps';
+import { YMaps, Map, Placemark, Clusterer, YMapsApi } from 'react-yandex-maps';
+import { Box } from '@mui/material';
 
 import { YMapsMethods } from './utils';
 import { IPlacemark } from './types';
+
+import './style.scss';
 
 interface ICard {
   placemarks: IPlacemark[];
@@ -17,6 +20,7 @@ const Card: FC<ICard> = ({ placemarks, setPlacemarks }) => {
     center: [55.76, 37.64],
     zoom: 7,
     controls: [],
+    behaviors: ['default', 'scrollZoom'],
   };
 
   const onSuggestSelect = async (event: any) => {
@@ -39,9 +43,24 @@ const Card: FC<ICard> = ({ placemarks, setPlacemarks }) => {
     ymapsRef.current = ymapsData;
   };
 
+  const getPointData = (index: number, placemark: IPlacemark) => {
+    return {
+      balloonContentBody: `<strong>${index + 1}</strong> ${placemark.name}`,
+      clusterCaption: `<strong>${index + 1}</strong> ${placemark.name}`,
+    };
+  };
+
+  const getPointOptions = () => {
+    return {
+      preset: 'islands#violetIcon',
+    };
+  };
+
   return (
-    <div>
-      <input ref={inputRef} placeholder="куда маркер ставить будем?" />
+    <Box display="flex" flexDirection="column" gap="10px" overflow="hidden">
+      <Box width="100%" boxSizing="border-box">
+        <input className="card-input" ref={inputRef} placeholder="куда маркер ставить будем?" />
+      </Box>
       {
         // @ts-ignore
         <YMaps
@@ -54,15 +73,33 @@ const Card: FC<ICard> = ({ placemarks, setPlacemarks }) => {
           {
             // @ts-ignore
             <Map state={mapState} onLoad={onYmapsLoad} instanceRef={ref} width="100%">
-              {placemarks.map((placemark) => (
+              {
                 // @ts-ignore
-                <Placemark geometry={placemark.coord} />
-              ))}
+                <Clusterer
+                  options={{
+                    preset: 'islands#invertedVioletClusterIcons',
+                    groupByCoordinates: false,
+                    clusterDisableClickZoom: true,
+                    clusterHideIconOnBalloonOpen: false,
+                    geoObjectHideIconOnBalloonOpen: false,
+                  }}
+                >
+                  {placemarks.map((placemark, index) => (
+                    // @ts-ignore
+                    <Placemark
+                      key={index}
+                      geometry={placemark.coord}
+                      properties={getPointData(index, placemark)}
+                      options={getPointOptions()}
+                    />
+                  ))}
+                </Clusterer>
+              }
             </Map>
           }
         </YMaps>
       }
-    </div>
+    </Box>
   );
 };
 
