@@ -87,6 +87,7 @@ const Card: FC<ICard> = ({ placemarks, setPlacemarks }) => {
                   {placemarks.map((placemark, index) => (
                     // @ts-ignore
                     <Placemark
+                      // eslint-disable-next-line react/no-array-index-key
                       key={index}
                       geometry={placemark.coord}
                       properties={getPointData(index, placemark)}
