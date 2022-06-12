@@ -10,5 +10,3 @@ services:
     ports:
       - 3000:3000
     command: sh -c "yarn && yarn start"
-    depends_on:
-      - db
