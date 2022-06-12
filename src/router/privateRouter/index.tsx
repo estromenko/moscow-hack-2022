@@ -3,7 +3,6 @@ import { Outlet, Navigate } from 'react-router-dom';
 import { useAppSelector } from '../../redux/hooks';
 
 import Footer from '../../widgets/Footer';
-import { Container } from '../../shared/ui';
 
 const PrivateRouter: FC = () => {
   const { accessToken } = useAppSelector((state) => state.auth);

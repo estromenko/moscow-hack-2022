@@ -60,4 +60,6 @@ const MultiSelect: FC<IMultiSelect> = ({ header, names, currentValue, handleChan
   );
 };
 
+MultiSelect.displayName = 'MultiSelect';
+
 export default MultiSelect;

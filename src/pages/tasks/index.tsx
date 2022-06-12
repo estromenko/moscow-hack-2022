@@ -1,8 +1,6 @@
 import React, { FC, useState, SyntheticEvent } from 'react';
 import { TasksTable } from '../../features/tasks';
 import { Typography, Box, Tab, Tabs } from '@mui/material';
-import { SelectChangeEvent } from '@mui/material/Select';
-import { MultiSelect } from '../../shared/ui';
 
 const Tasks: FC = () => {
   const [activeTab, setActiveTab] = useState<number>(0);
@@ -26,5 +24,7 @@ const Tasks: FC = () => {
     </>
   );
 };
+
+Tasks.displayName = 'Tasks';
 
 export default Tasks;

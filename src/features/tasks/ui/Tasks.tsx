@@ -196,6 +196,7 @@ const mock = [
 const TasksTable: FC = () => {
   const dispatch = useAppDispatch();
   const [personName, setPersonName] = useState<string[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { tasks } = useAppSelector((state) => state.tasks);
   const names = [
     'Oliver Hansen',
@@ -214,7 +215,6 @@ const TasksTable: FC = () => {
     dispatch(tasksThunk());
   }, []);
 
-  console.log('==========>personName', personName);
   const handleChangeSelect = (event: SelectChangeEvent<typeof personName>) => {
     const {
       target: { value },
@@ -235,5 +235,7 @@ const TasksTable: FC = () => {
     </Box>
   );
 };
+
+TasksTable.displayName = 'TasksTable';
 
 export default TasksTable;

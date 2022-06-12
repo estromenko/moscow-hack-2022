@@ -66,4 +66,6 @@ const Card: FC<ICard> = ({ placemarks, setPlacemarks }) => {
   );
 };
 
+Card.displayName = 'Card';
+
 export default Card;

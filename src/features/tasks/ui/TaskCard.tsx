@@ -40,4 +40,6 @@ const TaskCard: FC<ITasksCard> = ({ description, header, street }) => {
   );
 };
 
+TaskCard.displayName = 'TaskCard';
+
 export default TaskCard;
