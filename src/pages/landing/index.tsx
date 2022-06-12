@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { Box, Button, Grid, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import rabbit1 from '../../assets/rabbit1.png';
 import rabbit2 from '../../assets/rabbit2.png';
@@ -7,7 +8,6 @@ import rabbit3 from '../../assets/rabbit3.png';
 import helpImage from '../../assets/help.png';
 import cup from '../../assets/cup.png';
 import percent from '../../assets/percent.png';
-import { useNavigate } from 'react-router-dom';
 
 const Landing: FC = () => {
   const navigate = useNavigate();

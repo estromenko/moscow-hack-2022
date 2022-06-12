@@ -1,7 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { ICityPointResponse, IUserResponse, ICategoriesResponse } from '../../../shared/api';
-import { createEventThunk, tasksThunk, getTasksByIdThunk, getCategoriesThunk } from './thunk';
+import {
+  createEventThunk,
+  tasksThunk,
+  getTasksByIdThunk,
+  getCategoriesThunk,
+  getTasksByCategoryIdThunk,
+} from './thunk';
 
 interface ITasks {
   tasks: ICityPointResponse[];
@@ -47,10 +53,14 @@ export const tasksSlicer = createSlice({
     },
     [getTasksByIdThunk.fulfilled.type]: (state, action: PayloadAction<IUserResponse>) => {
       state.isLoading = false;
-      state.tasks = [...state.tasks];
+      state.tasks = [...action.payload.city_point];
     },
     [getTasksByIdThunk.rejected.type]: (state) => {
       state.isLoading = false;
+    },
+
+    [getTasksByCategoryIdThunk.fulfilled.type]: (state, action: PayloadAction<ICityPointResponse[]>) => {
+      state.tasks = action.payload;
     },
 
     [getCategoriesThunk.fulfilled.type]: (state, action: PayloadAction<ICategoriesResponse[]>) => {
