@@ -1,59 +1,23 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { ListViewBox } from '../../shared/ui/listViewBox';
 
-import cup from '../../assets/tinyCup.png';
 import camera from '../../assets/camera.png';
-
-const mock = [
-  {
-    id: 1,
-    image: cup,
-    data: {
-      title: 'title1',
-      body: 'data1',
-    },
-    hours: 150,
-  },
-  {
-    id: 2,
-    image: cup,
-    data: {
-      title: 'title2',
-      body: 'data2',
-    },
-    hours: 150,
-  },
-  {
-    id: 3,
-    image: cup,
-    data: {
-      title: 'title3',
-      body: 'data3',
-    },
-    hours: 150,
-  },
-  {
-    id: 4,
-    image: cup,
-    data: {
-      title: 'title4',
-      body: 'data4',
-    },
-    hours: 150,
-  },
-  {
-    id: 5,
-    image: cup,
-    data: {
-      title: 'title5',
-      body: 'data5',
-    },
-    hours: 150,
-  },
-];
+import { getGifts, IGiftsResponse } from '../../shared/api/gifts';
 
 const Gifts: FC = () => {
+  const [gifts, setGifts] = useState<IGiftsResponse[]>([]);
+
+  useEffect(() => {
+    const load = async () => {
+      const { data } = await getGifts();
+
+      setGifts(data);
+    };
+
+    load();
+  }, []);
+
   return (
     <Box display="flex" flexDirection="column" gap="10px" padding="20px" boxSizing="border-box" alignItems="center">
       <Box display="flex" flexDirection="row" justifyContent="space-around" margin="20px 0px" width="100%">
@@ -69,11 +33,11 @@ const Gifts: FC = () => {
         </Box>
       </Box>
 
-      {mock.map((el) => (
-        <ListViewBox image={el.image} hours={`${el.hours}ч`} key={el.id}>
+      {gifts.map((el) => (
+        <ListViewBox image={camera} hours={`${100}ч`} key={el.id}>
           <Box>
-            <Typography variant="h5">{el.data.title}</Typography>
-            <Typography>{el.data.body}</Typography>
+            <Typography variant="h5">{el.name}</Typography>
+            <Typography>{el.description}</Typography>
           </Box>
         </ListViewBox>
       ))}
