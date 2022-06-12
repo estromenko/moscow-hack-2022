@@ -16,9 +16,18 @@ export interface ILoginBody {
 
 export interface ILoginResult extends ILoginResponse {
   email: string;
+  name: string;
+  id: number;
 }
 
 export interface IRefreshBody extends ILoginResponse {}
+
+export interface IRefreshResult extends ILoginResponse {
+  email: string;
+  name: string;
+  id: number;
+}
+
 export interface IRegisterResponse extends ILoginResponse {}
 export interface IRegisterResult extends ILoginResult {}
 

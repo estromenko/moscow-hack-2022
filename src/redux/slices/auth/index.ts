@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { ILoginResult, IRefreshBody, IRegisterResult, IUserProfileResponse } from '../../../shared/api';
+import { ILoginResult, IRefreshResult, IRegisterResult, IUserProfileResponse } from '../../../shared/api';
 import { loginThunk, refreshThunk, regThunk, userProfileThunk } from '../../thunks/auth';
 
 interface IAuth {
@@ -36,11 +36,10 @@ export const authSlicer = createSlice({
     [loginThunk.fulfilled.type]: (state, action: PayloadAction<ILoginResult>) => {
       state.accessToken = action.payload.accessToken;
       state.email = action.payload.email;
+      state.id = action.payload.id;
+      state.name = action.payload.name;
       state.refreshToken = action.payload.refreshToken;
       state.isLoading = false;
-
-      localStorage.setItem('refresh_token', action.payload.refreshToken);
-      localStorage.setItem('access_token', action.payload.accessToken);
     },
     [loginThunk.rejected.type]: (state) => {
       state.isLoading = false;
@@ -51,12 +50,11 @@ export const authSlicer = createSlice({
     },
     [regThunk.fulfilled.type]: (state, action: PayloadAction<IRegisterResult>) => {
       state.email = action.payload.email;
+      state.id = action.payload.id;
+      state.name = action.payload.name;
       state.refreshToken = action.payload.refreshToken;
       state.accessToken = action.payload.refreshToken;
       state.isLoading = false;
-
-      localStorage.setItem('refresh_token', action.payload.refreshToken);
-      localStorage.setItem('access_token', action.payload.accessToken);
     },
     [regThunk.rejected.type]: (state) => {
       state.isLoading = false;
@@ -65,13 +63,13 @@ export const authSlicer = createSlice({
     [refreshThunk.pending.type]: (state) => {
       state.isLoading = true;
     },
-    [refreshThunk.fulfilled.type]: (state, action: PayloadAction<IRefreshBody>) => {
+    [refreshThunk.fulfilled.type]: (state, action: PayloadAction<IRefreshResult>) => {
+      state.email = action.payload.email;
+      state.id = action.payload.id;
+      state.name = action.payload.name;
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
       state.isLoading = false;
-
-      localStorage.setItem('refresh_token', action.payload.refreshToken);
-      localStorage.setItem('access_token', action.payload.accessToken);
     },
     [refreshThunk.rejected.type]: (state) => {
       state.isLoading = false;
