@@ -12,17 +12,19 @@ const NotFound: FC = () => {
   };
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center">
-      <Box marginTop="20px">
-        <img src={rabbit} alt="rabbit" />
+    <div className="main-container">
+      <Box display="flex" flexDirection="column" alignItems="center">
+        <Box marginTop="20px">
+          <img src={rabbit} alt="rabbit" />
+        </Box>
+        <Typography color="primary.main" fontWeight="bold" variant="h5" margin="20px 0px">
+          Страница не найдена
+        </Typography>
+        <Button onClick={onClick} variant="contained" size="large">
+          <Typography>Вернуться назад</Typography>
+        </Button>
       </Box>
-      <Typography color="primary.main" fontWeight="bold" variant="h5" margin="20px 0px">
-        Страница не найдена
-      </Typography>
-      <Button onClick={onClick} variant="contained" size="large">
-        <Typography>Вернуться назад</Typography>
-      </Button>
-    </Box>
+    </div>
   );
 };
 

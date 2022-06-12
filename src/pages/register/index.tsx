@@ -26,7 +26,7 @@ const Register: FC = () => {
 
   useEffect(() => {
     if (isAuth && accessToken) {
-      navigate('/');
+      navigate('/home');
     }
   }, [isLoading]);
 

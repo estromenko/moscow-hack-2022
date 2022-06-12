@@ -14,11 +14,11 @@ const Footer = () => {
     <footer>
       <Container>
         <Box bgcolor="primary.main" display="flex" flexDirection="row" justifyContent="space-around" padding="10px">
-          <FooterIcon image={homeImage} label="главная" path="/" />
+          <FooterIcon image={homeImage} label="главная" path="/home" />
           <FooterIcon image={tasksImage} label="задания" path="/tasks" />
           <FooterIcon image={giftImage} label="мероприятия" path="/gifts" />
           <FooterIcon image={ratingImage} label="рейтинг" path="/rating" />
-          <FooterIcon image={profileImage} label="профиль" path="/profile" />
+          <FooterIcon image={profileImage} label="профиль" path="/settings" />
         </Box>
       </Container>
     </footer>

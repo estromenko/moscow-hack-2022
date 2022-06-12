@@ -3,26 +3,27 @@ import { Routes, Route } from 'react-router-dom';
 
 import Login from '../pages/login';
 import Register from '../pages/register';
-import Home from '../pages/home';
+import Landing from '../pages/landing';
 import Tasks from '../pages/tasks';
 import PrivateRouter from './privateRouter';
 import Rating from '../pages/rating';
 import Gifts from '../pages/gifts';
-import Profile from '../pages/profile';
+import Home from '../pages/home';
 import Organization from '../pages/organization';
 import NotFound from '../pages/notFound';
 
 const Router = () => {
   return (
     <Routes>
+      <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
       <Route path="/tasks" element={<PrivateRouter />}>
         <Route path="/tasks" element={<Tasks />} />
       </Route>
-      <Route path="/" element={<PrivateRouter />}>
-        <Route path="/" element={<Home />} />
+      <Route path="/home" element={<PrivateRouter />}>
+        <Route path="/home" element={<Home />} />
       </Route>
       <Route path="/rating" element={<PrivateRouter />}>
         <Route path="/rating" element={<Rating />} />
@@ -30,13 +31,13 @@ const Router = () => {
       <Route path="/gifts" element={<PrivateRouter />}>
         <Route path="/gifts" element={<Gifts />} />
       </Route>
-      <Route path="/profile" element={<PrivateRouter />}>
-        <Route path="/profile" element={<Profile />} />
-        <Route path="*" element={<NotFound />} />
+      <Route path="/settings" element={<PrivateRouter />}>
+        <Route path="/settings" element={<Home />} />
       </Route>
       <Route path="/organization" element={<PrivateRouter />}>
         <Route path="/organization" element={<Organization />} />
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
