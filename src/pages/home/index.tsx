@@ -10,25 +10,19 @@ import percent from '../../assets/percent.png';
 
 const Home = () => {
   return (
-    <Box
-      bgcolor="secondary.main"
-      className="auth-container"
-      flexDirection="column"
-      align-items="center"
-      paddingTop="50px"
-    >
-      <Typography variant="h4" color="primary">
+    <Box display="flex" flexDirection="column" gap="10px" justifyContent="center" boxSizing="border-box">
+      <Typography variant="h4" color="primary" textAlign="center" marginTop="50px">
         Вы из Москвы?
         <br />
         Помогите своим!
       </Typography>
 
-      <Box marginTop="100px">
+      <Box marginTop="100px" textAlign="center">
         <Button variant="contained" size="large">
           Стать волонтером!
         </Button>
       </Box>
-      <Box marginTop="20px" marginBottom="20px" display="flex" flexDirection="row">
+      <Box marginTop="20px" marginBottom="20px" display="flex" flexDirection="row" justifyContent="space-around">
         <img src={rabbit1} alt="rabbit" />
         <Box>
           <Box bgcolor="primary.main" borderRadius="10px 10px 10px 0px" padding="15px" margin="5px">
@@ -51,7 +45,7 @@ const Home = () => {
         </Box>
       </Box>
 
-      <Box marginTop="20px" marginBottom="20px" display="flex" flexDirection="row">
+      <Box marginTop="20px" marginBottom="20px" display="flex" flexDirection="row" justifyContent="space-around">
         <img src={rabbit2} alt="rabbit" />
         <Box>
           <Box>
