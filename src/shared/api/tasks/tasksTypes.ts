@@ -6,6 +6,17 @@ export interface ICategory {
 
 export interface IDifficult extends ICategory {}
 
+export interface IPermission {
+  id: number;
+  name: string;
+}
+
+export interface IRole {
+  id: number;
+  name: string;
+  permissions: IPermission[];
+}
+
 export interface ICityPointCreate {
   name: string;
   description: string;
@@ -17,8 +28,8 @@ export interface ICityPointCreate {
   difficultId: number;
   time: number;
   address: string;
-  dateStart: Date;
-  dateEnd: Date;
+  dateStart: string;
+  dateEnd: string;
 }
 
 export interface ICityPointResponse {
@@ -36,4 +47,16 @@ export interface ICityPointResponse {
   address: string;
   dateStart: Date;
   dateEnd: Date;
+}
+
+export interface IUserResponse {
+  id: number;
+  name: string;
+  email: string;
+  roles: IRole[];
+}
+
+export interface ICategoriesResponse {
+  id: number;
+  name: string;
 }

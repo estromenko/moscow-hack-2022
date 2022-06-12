@@ -1,15 +1,16 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { Box, Button, Modal, TextField, Typography, Select, MenuItem } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { MobileDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useForm, Controller } from 'react-hook-form';
 
-import { useAppDispatch } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { ICityPointCreate } from '../../../shared/api';
-import { createEventThunk } from '../model';
+import { createEventThunk, getCategoriesThunk } from '../model';
 
 import { Card, IPlacemark, MultiSelect, MultiSelectFormat } from '../../../shared/ui';
+import { getTime } from '../utils/getTime';
 
 interface ITaskCreate {
   isOpen: boolean;
@@ -37,6 +38,7 @@ const style = {
 
 const TaskCreate: FC<ITaskCreate> = ({ isOpen, handleClose }) => {
   const dispatch = useAppDispatch();
+  const { categories } = useAppSelector((state) => state.tasks);
   const { register, getValues, control } = useForm<IFormCollection>();
   const [placemarks, setPlacemarks] = useState<IPlacemark[]>([]);
   const [categoryIds, setCategoryIds] = useState<MultiSelectFormat[]>([]);
@@ -47,20 +49,6 @@ const TaskCreate: FC<ITaskCreate> = ({ isOpen, handleClose }) => {
     startDate: new Date(),
     endDate: new Date(),
   });
-  const names = [
-    {
-      name: '123123',
-      id: 1,
-    },
-    {
-      name: '11111',
-      id: 2,
-    },
-    {
-      name: '4444',
-      id: 3,
-    },
-  ];
 
   const handleDateChange = (newValue: Date | null, type: 'startDate' | 'endDate') => {
     setDates((prev) => ({
@@ -91,12 +79,14 @@ const TaskCreate: FC<ITaskCreate> = ({ isOpen, handleClose }) => {
   const handleSave = () => {
     const values = getValues();
     const coords = placemarks[0];
+    const startDate = getTime(dates.startDate || new Date());
+    const endDate = getTime(dates.endDate || new Date());
     const task: ICityPointCreate = {
       name: values.name,
       address: coords.name,
       description: values.description,
-      dateEnd: dates.endDate || new Date(),
-      dateStart: dates.startDate || new Date(),
+      dateEnd: `${endDate.year}-${endDate.month}-${endDate.day}`,
+      dateStart: `${startDate.year}-${startDate.month}-${startDate.day}`,
       difficultId: values.difficultId,
       time: Number(values.time),
       categoryIds: categoryIds.map((el) => el.id),
@@ -110,11 +100,15 @@ const TaskCreate: FC<ITaskCreate> = ({ isOpen, handleClose }) => {
     handleClose();
   };
 
+  useEffect(() => {
+    dispatch(getCategoriesThunk());
+  }, []);
+
   return (
     <Modal open={isOpen} onClose={handleClose}>
       <Box sx={style} flexDirection="column">
         <Box display="flex" justifyContent="flex-start" flex="1" padding="8px">
-          <Typography>Создать задачу</Typography>
+          <Typography>Создать мероприятие</Typography>
         </Box>
         <Box
           display="flex"
@@ -143,7 +137,12 @@ const TaskCreate: FC<ITaskCreate> = ({ isOpen, handleClose }) => {
               </Select>
             )}
           />
-          <MultiSelect header="Категории" names={names} currentValue={categoryIds} handleChange={handleChangeSelect} />
+          <MultiSelect
+            header="Категории"
+            names={categories}
+            currentValue={categoryIds}
+            handleChange={handleChangeSelect}
+          />
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <MobileDatePicker
               label="Начало"

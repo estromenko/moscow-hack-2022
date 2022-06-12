@@ -15,9 +15,9 @@ const Organization: FC = () => {
 
   return (
     <>
-      <Box display="flex" justifyContent="space-between" padding="0 6px 0 30px" boxSizing="border-box">
+      <Box display="flex" justifyContent="center" boxSizing="border-box">
         <Typography color="primary.main" fontSize="30px" fontWeight="700">
-          Организатор
+          История мероприятий
         </Typography>
       </Box>
       <Button onClick={handleOpen}>Создать задачу</Button>

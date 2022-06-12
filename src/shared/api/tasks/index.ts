@@ -1,2 +1,2 @@
-export * from './authTypes';
-export * from './authResources';
+export * from './tasksResources';
+export * from './tasksTypes';

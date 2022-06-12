@@ -3,38 +3,40 @@ import { Box } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { tasksThunk } from '../model';
+import { getCategoriesThunk, getTasksByIdThunk, tasksThunk } from '../model';
 
 import TaskCard from './TaskCard';
 import { Card, IPlacemark, MultiSelect, MultiSelectFormat } from '../../../shared/ui';
+import { ICityPointResponse } from '../../../shared/api';
 
 interface ITasksTable {
   activeTab: number;
+  isCard: boolean;
 }
 
-const TasksTable: FC<ITasksTable> = ({ activeTab }) => {
+const TasksTable: FC<ITasksTable> = ({ activeTab, isCard }) => {
   const dispatch = useAppDispatch();
+  const { id } = useAppSelector((state) => state.auth);
   const [personName, setPersonName] = useState<MultiSelectFormat[]>([]);
   const [placemarks, setPlacemarks] = useState<IPlacemark[]>([]);
-  const { tasks } = useAppSelector((state) => state.tasks);
-  const names = [
-    {
-      name: '123123',
-      id: 1,
-    },
-    {
-      name: '11111',
-      id: 2,
-    },
-    {
-      name: '4444',
-      id: 3,
-    },
-  ];
+  const [tasksByDate, setTasksByDate] = useState<ICityPointResponse[]>([]);
+  const { tasks, categories } = useAppSelector((state) => state.tasks);
 
   useEffect(() => {
-    dispatch(tasksThunk());
+    dispatch(getCategoriesThunk());
+
+    if (isCard) {
+      dispatch(tasksThunk());
+    } else {
+      dispatch(getTasksByIdThunk(id || 0));
+    }
   }, []);
+
+  useEffect(() => {
+    if (!isCard) {
+      setTasksByDate(tasks);
+    }
+  }, [activeTab, tasks]);
 
   useEffect(() => {
     const filteredPlacemarks: IPlacemark[] = tasks.map((el) => ({
@@ -66,24 +68,34 @@ const TasksTable: FC<ITasksTable> = ({ activeTab }) => {
   return (
     <Box display="flex" flexDirection="column" gap="10px" marginTop="30px">
       <Box display="flex" justifyContent="space-between" padding="0 6px 0 30px" boxSizing="border-box">
-        <MultiSelect header="Тэг" names={names} currentValue={personName} handleChange={handleChangeSelect} />
+        <MultiSelect header="Тэг" names={categories} currentValue={personName} handleChange={handleChangeSelect} />
       </Box>
-      {activeTab === 0 && (
+      {isCard ? (
+        <>
+          {activeTab === 0 && (
+            <Box display="flex" flexDirection="column" gap="10px" padding="0 6px 0 30px" boxSizing="border-box">
+              {tasks.map((el) => (
+                <TaskCard description={el.description} header={el.name} street={el.address} />
+              ))}
+            </Box>
+          )}
+          {activeTab === 1 && (
+            <>
+              <Card placemarks={placemarks} setPlacemarks={setPlacemarks} />
+              <Box>
+                {placemarks.map((el) => (
+                  <p>{el.name}</p>
+                ))}
+              </Box>
+            </>
+          )}
+        </>
+      ) : (
         <Box display="flex" flexDirection="column" gap="10px" padding="0 6px 0 30px" boxSizing="border-box">
-          {tasks.map((el) => (
+          {tasksByDate.map((el) => (
             <TaskCard description={el.description} header={el.name} street={el.address} />
           ))}
         </Box>
-      )}
-      {activeTab === 1 && (
-        <>
-          <Card placemarks={placemarks} setPlacemarks={setPlacemarks} />
-          <Box>
-            {placemarks.map((el) => (
-              <p>{el.name}</p>
-            ))}
-          </Box>
-        </>
       )}
     </Box>
   );

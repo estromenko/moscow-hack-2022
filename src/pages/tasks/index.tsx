@@ -20,7 +20,7 @@ const Tasks: FC = () => {
           <Tab label="Карта" />
         </Tabs>
       </Box>
-      <TasksTable activeTab={activeTab} />
+      <TasksTable activeTab={activeTab} isCard />
     </>
   );
 };
