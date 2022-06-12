@@ -6,7 +6,7 @@ import homeImage from '../assets/home.png';
 import tasksImage from '../assets/tasks.png';
 import giftImage from '../assets/gift.png';
 import ratingImage from '../assets/rating.png';
-import settingsImage from '../assets/settings.png';
+import profileImage from '../assets/settings.png';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -14,7 +14,7 @@ const Footer = () => {
     <footer>
       <Container>
         <Box bgcolor="primary.main" display="flex" flexDirection="row" justifyContent="space-around" padding="10px">
-          <Link to="/home">
+          <Link to="/">
             <img src={homeImage} alt="home" />
           </Link>
           <Link to="/tasks">
@@ -26,8 +26,8 @@ const Footer = () => {
           <Link to="/rating">
             <img src={ratingImage} alt="rating" />
           </Link>
-          <Link to="/settings">
-            <img src={settingsImage} alt="settings" />
+          <Link to="/profile">
+            <img src={profileImage} alt="profile" />
           </Link>
         </Box>
       </Container>

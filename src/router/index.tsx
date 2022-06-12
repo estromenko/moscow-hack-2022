@@ -8,6 +8,7 @@ import Tasks from '../pages/tasks';
 import PrivateRouter from './privateRouter';
 import Rating from '../pages/rating';
 import Gifts from '../pages/gifts';
+import Profile from '../pages/profile';
 
 const Router = () => {
   return (
@@ -22,6 +23,7 @@ const Router = () => {
         <Route path="/" element={<Home />} />
         <Route path="/rating" element={<Rating />} />
         <Route path="/gifts" element={<Gifts />} />
+        <Route path="/profile" element={<Profile />} />
       </Route>
     </Routes>
   );
