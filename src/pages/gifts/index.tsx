@@ -34,7 +34,7 @@ const Gifts: FC = () => {
       </Box>
 
       {gifts.map((el) => (
-        <ListViewBox image={camera} hours={`${100}ч`} key={el.id}>
+        <ListViewBox image={camera} hours={`${el.manaCost}`} key={el.id}>
           <Box>
             <Typography variant="h5">{el.name}</Typography>
             <Typography>{el.description}</Typography>

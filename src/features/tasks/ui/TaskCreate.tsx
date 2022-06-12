@@ -120,7 +120,7 @@ const TaskCreate: FC<ITaskCreate> = ({ isOpen, handleClose }) => {
           gap="10px"
         >
           <TextField placeholder="Имя" type="string" {...register('name')} />
-          <TextField placeholder="Опимание" type="string" {...register('description')} />
+          <TextField placeholder="Описание" type="string" {...register('description')} />
           <TextField placeholder="Время" type="number" {...register('time')} />
           <Box>
             <Card placemarks={placemarks} setPlacemarks={setPlacemarks} />

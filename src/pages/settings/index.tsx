@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const Settings: FC = () => {
@@ -74,5 +74,7 @@ const Settings: FC = () => {
     </Box>
   );
 };
+
+Settings.displayName = 'Settings';
 
 export default Settings;

@@ -1,10 +1,12 @@
 import React, { FC, useState } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { TaskCreate } from '../../features/tasks';
+import { GiftCreate } from '../../features/gifts';
 
 const OrganisationSettings: FC = () => {
   const [isActiveCreateTask, setIsActiveCreateTask] = useState<boolean>(false);
+  const [isActiveCreateGift, setIsActiveCreateGift] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleNavigate = (to: string) => {
@@ -52,7 +54,7 @@ const OrganisationSettings: FC = () => {
             alignItems="center"
             justifyContent="flex-start"
             padding="15px"
-            onClick={() => handleNavigate('/personal')}
+            onClick={() => setIsActiveCreateGift(true)}
           >
             <Typography fontWeight="400" fontSize="22px">
               Создать награду
@@ -89,8 +91,11 @@ const OrganisationSettings: FC = () => {
         </Box>
       </Box>
       <TaskCreate isOpen={isActiveCreateTask} handleClose={() => setIsActiveCreateTask(false)} />
+      <GiftCreate isOpen={isActiveCreateGift} handleClose={() => setIsActiveCreateGift(false)} />
     </>
   );
 };
+
+OrganisationSettings.displayName = 'OrganisationSettings';
 
 export default OrganisationSettings;

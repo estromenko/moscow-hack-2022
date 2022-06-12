@@ -28,4 +28,6 @@ const Events: FC = () => {
   );
 };
 
+Events.displayName = 'Events';
+
 export default Events;
