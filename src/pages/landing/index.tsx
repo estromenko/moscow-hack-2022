@@ -7,8 +7,15 @@ import rabbit3 from '../../assets/rabbit3.png';
 import helpImage from '../../assets/help.png';
 import cup from '../../assets/cup.png';
 import percent from '../../assets/percent.png';
+import { useNavigate } from 'react-router-dom';
 
 const Landing: FC = () => {
+  const navigate = useNavigate();
+
+  const handleGoToAuth = () => {
+    navigate('/register');
+  };
+
   return (
     <div className="main-container">
       <Box display="flex" flexDirection="column" gap="10px" justifyContent="center" boxSizing="border-box">
@@ -19,7 +26,7 @@ const Landing: FC = () => {
         </Typography>
 
         <Box marginTop="100px" textAlign="center">
-          <Button variant="contained" size="large">
+          <Button variant="contained" size="large" onClick={handleGoToAuth}>
             Стать волонтером!
           </Button>
         </Box>

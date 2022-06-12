@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
 import { IRegisterBody } from '../../shared/api';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
@@ -22,6 +22,10 @@ const Register: FC = () => {
 
     dispatch(regThunk(values));
     setIsAuth(true);
+  };
+
+  const handleGoToLogin = () => {
+    navigate('/login');
   };
 
   useEffect(() => {
@@ -49,6 +53,7 @@ const Register: FC = () => {
         <AuthButton className="button" color="primary" variant="contained" onClick={handleRegister}>
           Зарегистрироваться
         </AuthButton>
+        <Button onClick={handleGoToLogin}>Войти</Button>
       </Form>
     </AuthContainer>
   );

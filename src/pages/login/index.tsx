@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,6 +22,10 @@ const Login: FC = () => {
     setIsAuth(true);
   };
 
+  const handleGoToRegister = () => {
+    navigate('/register');
+  };
+
   useEffect(() => {
     if (isAuth && accessToken) {
       navigate('/home');
@@ -30,6 +34,9 @@ const Login: FC = () => {
 
   return (
     <AuthContainer>
+      <Typography color="primary" variant="h4">
+        Вход
+      </Typography>
       <Form>
         <Input type="email" label="Email" variant="outlined" {...register('email')} />
         <Input type="password" label="Пароль" variant="outlined" {...register('password')} />
@@ -37,6 +44,7 @@ const Login: FC = () => {
           Войти
         </Button>
       </Form>
+      <Button onClick={handleGoToRegister}>Зарегистрироваться</Button>
     </AuthContainer>
   );
 };
